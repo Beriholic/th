@@ -2,7 +2,8 @@ package cmd
 
 import (
 	"fmt"
-	"trash/handler"
+
+	"github.com/Beriholic/trash/handler"
 
 	"github.com/spf13/cobra"
 )
@@ -10,7 +11,7 @@ import (
 var pushCmd = &cobra.Command{
 	Use:   "push",
 	Short: "Push a file to trash",
-	Args: cobra.MinimumNArgs(1),
+	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		for _, file := range args {
 			err := handler.PushToTrash(file)

@@ -1,6 +1,6 @@
 package main
 
-import "trash/cmd"
+import "github.com/Beriholic/trash/cmd"
 
 func main() {
 	cmd.Execute()

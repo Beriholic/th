@@ -1,10 +1,9 @@
-module trash
+module github.com/Beriholic/trash
 
 go 1.21.4
 
 require (
 	github.com/jedib0t/go-pretty v4.3.0+incompatible
-	github.com/jedib0t/go-pretty/v6 v6.4.9
 	github.com/spf13/cobra v1.8.0
 	go.etcd.io/etcd/client/pkg/v3 v3.5.10
 	gopkg.in/ini.v1 v1.67.0
