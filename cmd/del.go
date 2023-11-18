@@ -10,8 +10,9 @@ import (
 )
 
 var delCmd = &cobra.Command{
-	Use:   "del",
-	Short: "del files in trash",
+	Use:        "del",
+	ArgAliases: []string{"d"},
+	Short:      "del files in trash",
 	PreRun: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			PostHandleDelWithNoArgs()
