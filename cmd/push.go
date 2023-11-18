@@ -9,9 +9,10 @@ import (
 )
 
 var pushCmd = &cobra.Command{
-	Use:   "push",
-	Short: "Push a file to trash",
-	Args:  cobra.MinimumNArgs(1),
+	Use:     "push",
+	Aliases: []string{"p", "ps", "rm", "remove"},
+	Short:   "Push a file to trash",
+	Args:    cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		for _, file := range args {
 			err := handler.PushToTrash(file)

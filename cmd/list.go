@@ -8,8 +8,9 @@ import (
 
 // listCmd represents the list command
 var listCmd = &cobra.Command{
-	Use:   "list",
-	Short: "list all files in trash",
+	Use:     "list",
+	Aliases: []string{"ls", "ll", "l"},
+	Short:   "list all files in trash",
 	Run: func(cmd *cobra.Command, args []string) {
 		handler.ShowTable()
 	},
