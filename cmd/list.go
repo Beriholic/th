@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/Beriholic/trash/handler"
+	"github.com/Beriholic/th/handler"
 
 	"github.com/spf13/cobra"
 )

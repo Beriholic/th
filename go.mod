@@ -1,4 +1,4 @@
-module github.com/Beriholic/trash
+module github.com/Beriholic/th
 
 go 1.21.4
 
