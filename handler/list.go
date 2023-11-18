@@ -27,7 +27,6 @@ func ShowTable() ([]Info, error) {
 	}
 
 	for _, v := range info {
-		fmt.Println(v)
 		rows := table.Row{v.id, v.fileName, v.fromPath, v.trashTime}
 		t.AppendRow(rows)
 	}
