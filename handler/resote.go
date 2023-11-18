@@ -7,6 +7,11 @@ import (
 func Restore(nums []int, infos []Info) error {
 	fmt.Println("------")
 	for _, v := range nums {
+		if OutOfRange(v, 0, len(infos)-1) {
+			fmt.Println("id --> ", v, "out of range")
+			continue
+		}
+
 		fromPath := infos[v].fromPath
 		trashPath := fmt.Sprintf("%s/%s", TrashFile, infos[v].fileName)
 		infoPath := fmt.Sprintf("%s/%s.TrashInfo", TrashInfo, infos[v].fileName)

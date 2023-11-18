@@ -22,9 +22,9 @@ var restoreCmd = &cobra.Command{
 	Args:    cobra.MinimumNArgs(0),
 	PreRun: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
-			PostHandleWithNoArgs()
+			PostHandleRestoreWithNoArgs()
 		} else {
-			PostHandleWithArgs()
+			PostHandleRestoreWithArgs()
 		}
 	},
 	Run: func(cmd *cobra.Command, args []string) {
@@ -32,7 +32,7 @@ var restoreCmd = &cobra.Command{
 			return
 		}
 		if len(args) == 0 {
-			HandleWithNoArgs()
+			HandleRestoreWithNoArgs()
 		} else {
 			fmt.Println("ok")
 			nums := make([]int, 0)
@@ -44,7 +44,7 @@ var restoreCmd = &cobra.Command{
 				}
 				nums = append(nums, num)
 			}
-			HandleWithArgs(nums)
+			HandleRestoreWithArgs(nums)
 		}
 	},
 	PostRun: func(cmd *cobra.Command, args []string) {
@@ -52,7 +52,7 @@ var restoreCmd = &cobra.Command{
 	},
 }
 
-func PostHandleWithArgs() {
+func PostHandleRestoreWithArgs() {
 	var err error
 	fileInfos, err = handler.GetTrashList()
 	if err != nil {
@@ -62,7 +62,7 @@ func PostHandleWithArgs() {
 		isEmpty = true
 	}
 }
-func PostHandleWithNoArgs() {
+func PostHandleRestoreWithNoArgs() {
 	var err error
 	fileInfos, err = handler.ShowTable()
 	if err != nil {
@@ -74,18 +74,17 @@ func PostHandleWithNoArgs() {
 	}
 
 }
-func HandleWithArgs(num []int) {
+func HandleRestoreWithArgs(num []int) {
 	if err := handler.Restore(num, fileInfos); err != nil {
 		fmt.Println(err)
 		return
 	}
 }
-func HandleWithNoArgs() {
+func HandleRestoreWithNoArgs() {
 	fmt.Println("input the id of the file you want to restore")
 	nums := make([]int, 0)
 	input := Read()
 	input = strings.Replace(input, "\n", "", -1)
-	// fmt.Println("input --> ", input)
 	for _, v := range strings.Split(input, " ") {
 		num, err := strconv.Atoi(v)
 		if err != nil {
