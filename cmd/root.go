@@ -8,7 +8,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "trash",
+	Use:   "th",
 	Short: "A CLI tool for managing trash files",
 	PostRun: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Done!")
