@@ -17,7 +17,7 @@ var isEmpty bool = false
 
 var restoreCmd = &cobra.Command{
 	Use:     "restore",
-	Aliases: []string{"r", "rs"},
+	Aliases: []string{"r", "rs", "res"},
 	Short:   "restore a file from trash",
 	Args:    cobra.MinimumNArgs(0),
 	PreRun: func(cmd *cobra.Command, args []string) {
