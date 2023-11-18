@@ -5,6 +5,7 @@ import (
 )
 
 func Restore(nums []int, infos []Info) error {
+	fmt.Println("------")
 	for _, v := range nums {
 		fromPath := infos[v].fromPath
 		trashPath := fmt.Sprintf("%s/%s", TrashFile, infos[v].fileName)
@@ -18,7 +19,6 @@ func Restore(nums []int, infos []Info) error {
 			return fmt.Errorf("删除info文件失败 --> %v", err)
 		}
 		fmt.Println("id --> ", v, "Done!")
-
 	}
 
 	return nil
