@@ -10,9 +10,9 @@ A CLI tool for managing trash files
 - [ ] ```ui``` --> a tui for trash
 
 
-## build
+## install
 ```bash
-go build -o th 
+go install github.com/Beriholic/th@latest
 ```
 
 ## usage
