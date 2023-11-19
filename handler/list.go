@@ -13,8 +13,9 @@ func newTable() table.Writer {
 	t.AppendHeader(header)
 	return t
 }
-func ShowTable() ([]Info, error) {
-	info, err := GetTrashList()
+func ShowTable(sortType, sortOrder string) ([]Info, error) {
+	info, err := GetTrashList(sortType, sortOrder)
+
 	if err != nil {
 		return nil, err
 	}
@@ -26,8 +27,8 @@ func ShowTable() ([]Info, error) {
 		return nil, nil
 	}
 
-	for _, v := range info {
-		rows := table.Row{v.id, v.fileName, v.fromPath, v.trashTime}
+	for id, v := range info {
+		rows := table.Row{id, v.fileName, v.fromPath, v.trashTime}
 		t.AppendRow(rows)
 	}
 

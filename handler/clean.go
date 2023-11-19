@@ -3,14 +3,15 @@ package handler
 import (
 	"os"
 
+	"github.com/Beriholic/th/consts"
 	"github.com/Beriholic/th/consts/errs"
 )
 
 func Clean() error {
-	if err := cleanDir(TrashFile); err != nil {
+	if err := cleanDir(consts.TrashFile); err != nil {
 		return err
 	}
-	if err := cleanDir(TrashInfo); err != nil {
+	if err := cleanDir(consts.TrashInfo); err != nil {
 		return err
 	}
 	return nil

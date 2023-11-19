@@ -20,12 +20,17 @@ var restoreCmd = &cobra.Command{
 	Aliases: []string{"r", "rs", "res"},
 	Short:   "restore a file from trash",
 	Args:    cobra.MinimumNArgs(0),
-	PreRun: func(cmd *cobra.Command, args []string) {
-		if len(args) == 0 {
-			PostHandleRestoreWithNoArgs()
-		} else {
-			PostHandleRestoreWithArgs()
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		if err := CheckFlag(); err != nil {
+			return err
 		}
+
+		if len(args) == 0 {
+			PreHandleRestoreWithNoArgs(sortType, sortOrder)
+		} else {
+			PreHandleRestoreWithArgs()
+		}
+		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		if isEmpty {
@@ -47,14 +52,11 @@ var restoreCmd = &cobra.Command{
 			HandleRestoreWithArgs(nums)
 		}
 	},
-	PostRun: func(cmd *cobra.Command, args []string) {
-		fmt.Println("ALL Done!")
-	},
 }
 
-func PostHandleRestoreWithArgs() {
+func PreHandleRestoreWithArgs() {
 	var err error
-	fileInfos, err = handler.GetTrashList()
+	fileInfos, err = handler.GetTrashList(sortOrder, sortType)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -62,9 +64,9 @@ func PostHandleRestoreWithArgs() {
 		isEmpty = true
 	}
 }
-func PostHandleRestoreWithNoArgs() {
+func PreHandleRestoreWithNoArgs(sortType, sortOrder string) {
 	var err error
-	fileInfos, err = handler.ShowTable()
+	fileInfos, err = handler.ShowTable(sortType, sortOrder)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -84,7 +86,6 @@ func HandleRestoreWithNoArgs() {
 	fmt.Println("input the id of the file you want to restore")
 	nums := make([]int, 0)
 	input := Read()
-	input = strings.Replace(input, "\n", "", -1)
 	for _, v := range strings.Split(input, " ") {
 		num, err := strconv.Atoi(v)
 		if err != nil {
@@ -104,9 +105,13 @@ func HandleRestoreWithNoArgs() {
 func Read() string {
 	reader := bufio.NewReader(os.Stdin)
 	str, _ := reader.ReadString('\n')
+	str = strings.Trim(str, "\n")
+	str = strings.Trim(str, " ")
 	return str
 }
 
 func init() {
 	rootCmd.AddCommand(restoreCmd)
+	restoreCmd.Flags().StringVarP(&sortType, "sort", "s", "name", "sort by name or date")
+	restoreCmd.Flags().StringVarP(&sortOrder, "order", "o", "asc", "sort order asc or desc")
 }

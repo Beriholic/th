@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/Beriholic/th/consts"
 	"github.com/Beriholic/th/consts/errs"
 )
 
@@ -24,7 +25,7 @@ func PushToTrash(path string) error {
 	if err != nil {
 		return errs.BuildInfo(errs.ErrGetAbsPath, err)
 	}
-	err = MoveFile(absPath, TrashFile+"/"+filepath.Base(absPath))
+	err = MoveFile(absPath, consts.TrashFile+"/"+filepath.Base(absPath))
 	if err != nil {
 		return errs.BuildInfo(errs.ErrMoveFile, err)
 	}
@@ -35,7 +36,7 @@ func SaveFileData(path string) error {
 	deletionData := time.Now().Format("2006-01-02T15:04:05")
 
 	//在info目录下创建一个文件
-	file, err := os.Create(TrashInfo + "/" + filepath.Base(path) + ".TrashInfo")
+	file, err := os.Create(consts.TrashInfo + "/" + filepath.Base(path) + ".TrashInfo")
 	if err != nil {
 		return errs.BuildInfo(errs.ErrNewFile, err)
 	}

@@ -4,17 +4,14 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 	"time"
 
+	"github.com/Beriholic/th/consts"
 	"github.com/Beriholic/th/consts/errs"
 	"go.etcd.io/etcd/client/pkg/v3/fileutil"
 	"gopkg.in/ini.v1"
 )
-
-var home = os.Getenv("HOME")
-
-var TrashFile = fmt.Sprintf("%s/.local/share/Trash/files", home)
-var TrashInfo = fmt.Sprintf("%s/.local/share/Trash/info", home)
 
 type FileInfo struct {
 	infos []Info
@@ -27,30 +24,45 @@ func NewFileInfo() *FileInfo {
 }
 
 type Info struct {
-	id        int
 	fileName  string
 	fromPath  string
 	trashTime string
 }
 
-func GetTrashList() ([]Info, error) {
+func GetTrashList(sortType, sortOrder string) ([]Info, error) {
 	fileInfo := NewFileInfo()
-	files, err := fileutil.ReadDir(TrashInfo)
+	files, err := fileutil.ReadDir(consts.TrashInfo)
 	if err != nil {
 		return nil, errs.BuildInfo(errs.ErrReadFile, err)
 	}
-	id := 0
 
 	for _, file := range files {
-		path := fmt.Sprintf("%s/%s", TrashInfo, file)
-		fileInfo.BuildInfo(id, path)
-		id++
+		path := fmt.Sprintf("%s/%s", consts.TrashInfo, file)
+		fileInfo.BuildInfo(path)
 	}
+
+	sort.Slice(fileInfo.infos, func(i, j int) bool {
+		switch sortType {
+		case "name":
+			if sortOrder == "asc" {
+				return fileInfo.infos[i].fileName < fileInfo.infos[j].fileName
+			} else {
+				return fileInfo.infos[i].fileName > fileInfo.infos[j].fileName
+			}
+		case "data":
+			if sortOrder == "asc" {
+				return fileInfo.infos[i].trashTime < fileInfo.infos[j].trashTime
+			} else {
+				return fileInfo.infos[i].trashTime > fileInfo.infos[j].trashTime
+			}
+		}
+		return false
+	})
 
 	return fileInfo.infos, nil
 }
 
-func (f *FileInfo) BuildInfo(id int, path string) error {
+func (f *FileInfo) BuildInfo(path string) error {
 	cfg, err := ini.Load(path)
 	if err != nil {
 		return errs.BuildInfo(errs.ErrReadFile, err)
@@ -60,7 +72,6 @@ func (f *FileInfo) BuildInfo(id int, path string) error {
 	trashTime, _ := time.Parse("2006-01-02T15:04:05", _trashTime)
 
 	f.infos = append(f.infos, Info{
-		id:        id,
 		fileName:  filepath.Base(fromPath),
 		fromPath:  fromPath,
 		trashTime: trashTime.Format("2006-01-02 15:04:05"),
