@@ -67,7 +67,8 @@ th restore
 - [x] ```clean``` --> clean trash
 - [x] ```list``` --> list trash files
 - [x] ```restore``` --> restore file from trash
-    - []  use ```restore [start,end]``` to restore a range of files
+    - [x]  use ```[start-end]``` to restore a range of files under the interactive menu
 - [x] ```del``` --> delete file from trash
-    - [] use ```del [start,end]``` to delete a range of files
+    - [x] use ```[start-end]``` to delete a range of files run under the interactive menu
+- [] ```find``` --> find file in trash
 - [ ] ```ui``` --> a tui for trash

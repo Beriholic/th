@@ -14,8 +14,9 @@ func Restore(nums []int, infos []Info) error {
 		fmt.Println(infos[nums[i]].fileName)
 	}
 	if len(nums) > 5 {
-		fmt.Println("...")
+		fmt.Println(".........")
 	}
+	fmt.Printf("%v files will be restored", len(nums))
 	fmt.Println("do you want to continue? [y/n]")
 	var input string
 	fmt.Scanln(&input)
@@ -31,11 +32,6 @@ func Restore(nums []int, infos []Info) error {
 
 	fmt.Println("------")
 	for _, v := range nums {
-		if OutOfRange(v, 0, len(infos)-1) {
-			fmt.Println("id --> ", v, "out of range")
-			continue
-		}
-
 		fromPath := infos[v].fromPath
 		trashPath := fmt.Sprintf("%s/%s", consts.TrashFile, infos[v].fileName)
 		infoPath := fmt.Sprintf("%s/%s.TrashInfo", consts.TrashInfo, infos[v].fileName)

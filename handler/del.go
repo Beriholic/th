@@ -14,8 +14,9 @@ func Delete(nums []int, infos []Info) error {
 		fmt.Println(infos[nums[i]].fileName)
 	}
 	if len(nums) > 5 {
-		fmt.Println("...")
+		fmt.Println(".........")
 	}
+	fmt.Printf("%v files will be deleted", len(nums))
 	fmt.Println("do you want to continue? [y/n]")
 	var input string
 	fmt.Scanln(&input)
@@ -30,11 +31,6 @@ func Delete(nums []int, infos []Info) error {
 	}
 	fmt.Println("------")
 	for _, v := range nums {
-		if OutOfRange(v, 0, len(infos)-1) {
-			fmt.Println("id -->", v, errs.ErrArrayOutOfRange)
-			continue
-		}
-
 		trashPath := fmt.Sprintf("%s/%s", consts.TrashFile, infos[v].fileName)
 		infoPath := fmt.Sprintf("%s/%s.TrashInfo", consts.TrashInfo, infos[v].fileName)
 
@@ -49,8 +45,4 @@ func Delete(nums []int, infos []Info) error {
 	}
 
 	return nil
-}
-
-func OutOfRange(idx, l, r int) bool {
-	return idx < l || idx > r
 }

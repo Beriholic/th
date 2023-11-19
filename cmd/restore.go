@@ -1,11 +1,8 @@
 package cmd
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 	"strconv"
-	"strings"
 
 	"github.com/Beriholic/th/handler"
 
@@ -84,30 +81,15 @@ func HandleRestoreWithArgs(num []int) {
 }
 func HandleRestoreWithNoArgs() {
 	fmt.Println("input the id of the file you want to restore")
-	nums := make([]int, 0)
-	input := Read()
-	for _, v := range strings.Split(input, " ") {
-		num, err := strconv.Atoi(v)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		nums = append(nums, num)
+	nums, err := InputToNums(Read(), len(fileInfos))
+	if err != nil {
+		fmt.Println(err)
+		return
 	}
-
 	if err := handler.Restore(nums, fileInfos); err != nil {
 		fmt.Println(err)
 		return
 	}
-
-}
-
-func Read() string {
-	reader := bufio.NewReader(os.Stdin)
-	str, _ := reader.ReadString('\n')
-	str = strings.Trim(str, "\n")
-	str = strings.Trim(str, " ")
-	return str
 }
 
 func init() {
