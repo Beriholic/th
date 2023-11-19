@@ -16,6 +16,4 @@ var (
 	TrashInfo = fmt.Sprintf("%s/.local/share/Trash/info", home)
 )
 
-var (
-	Version = "v1.0.1"
-)
+var Version = "v0.1.0"
