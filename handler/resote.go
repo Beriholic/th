@@ -2,6 +2,8 @@ package handler
 
 import (
 	"fmt"
+
+	"github.com/Beriholic/th/consts/errs"
 )
 
 func Restore(nums []int, infos []Info) error {
@@ -17,11 +19,11 @@ func Restore(nums []int, infos []Info) error {
 		infoPath := fmt.Sprintf("%s/%s.TrashInfo", TrashInfo, infos[v].fileName)
 
 		if err := MoveFile(trashPath, fromPath); err != nil {
-			return fmt.Errorf("还原文件失败 --> %v", err)
+			return errs.BuildInfo(errs.ErrRestore, err)
 		}
 
 		if err := RemoveFile(infoPath); err != nil {
-			return fmt.Errorf("删除info文件失败 --> %v", err)
+			return errs.BuildInfo(errs.ErrRemoveFile, err)
 		}
 		fmt.Println("id --> ", v, "Done!")
 	}

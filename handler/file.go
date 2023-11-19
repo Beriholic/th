@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/Beriholic/th/consts/errs"
 	"go.etcd.io/etcd/client/pkg/v3/fileutil"
 	"gopkg.in/ini.v1"
 )
@@ -36,7 +37,7 @@ func GetTrashList() ([]Info, error) {
 	fileInfo := NewFileInfo()
 	files, err := fileutil.ReadDir(TrashInfo)
 	if err != nil {
-		return nil, fmt.Errorf("读取文件夹失败 --> %v", err)
+		return nil, errs.BuildInfo(errs.ErrReadFile, err)
 	}
 	id := 0
 
@@ -52,7 +53,7 @@ func GetTrashList() ([]Info, error) {
 func (f *FileInfo) BuildInfo(id int, path string) error {
 	cfg, err := ini.Load(path)
 	if err != nil {
-		return fmt.Errorf("读取文件失败 --> %v", err)
+		return errs.BuildInfo(errs.ErrReadFile, err)
 	}
 	fromPath := cfg.Section("Trash Info").Key("Path").String()
 	_trashTime := cfg.Section("Trash Info").Key("DeletionDate").String()
@@ -65,11 +66,6 @@ func (f *FileInfo) BuildInfo(id int, path string) error {
 		trashTime: trashTime.Format("2006-01-02 15:04:05"),
 	})
 
-	// debug
-	// fmt.Println("debug")
-	// for _, v := range fileInfo {
-	// 	fmt.Println(v)
-	// }
 	return nil
 }
 
