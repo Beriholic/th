@@ -17,6 +17,10 @@ var (
 	ErrArrayOutOfRange = errors.New("array out of range")
 
 	ErrGetAbsPath = errors.New("get absolute path failed")
+
+	ErrInvaildSortType  = errors.New("sort type must be name or date")
+	ErrInvalidSortOrder = errors.New("sort order must be asc or desc")
+	ErrInvalidInput     = errors.New("invalid input")
 )
 
 func BuildInfo(msg, err error) error {
