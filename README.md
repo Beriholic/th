@@ -60,15 +60,3 @@ th restore
  ```
  > you can use ```d``` instead of ```del```
 
-
-
-## TODO
-- [x] ```push``` --> push file to trash
-- [x] ```clean``` --> clean trash
-- [x] ```list``` --> list trash files
-- [x] ```restore``` --> restore file from trash
-    - [x]  use ```[start-end]``` to restore a range of files under the interactive menu
-- [x] ```del``` --> delete file from trash
-    - [x] use ```[start-end]``` to delete a range of files run under the interactive menu
-- [ ] ```find``` --> find file in trash
-- [ ] ```ui``` --> a tui for trash
